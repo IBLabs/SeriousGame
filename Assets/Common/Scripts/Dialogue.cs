@@ -9,23 +9,26 @@ using UnityEngine.Serialization;
 public class Dialogue : MonoBehaviour
 {
     public UnityEvent dialogueFinished;
-    
+
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private string[] lines;
     [SerializeField] private float textSpeed = .3f;
 
     private int _index;
-    
+    private bool _isDialogueFinished;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        textComponent.text = string.Empty;
-        StartDialogue();
+        // TODO: remove if not needed
+        // StartDialogue();
     }
 
-    void StartDialogue()
+    public void StartDialogue()
     {
+        textComponent.text = string.Empty;
         _index = 0;
+
         StartCoroutine(TypeLine());
     }
 
@@ -33,10 +36,25 @@ public class Dialogue : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            NextLine();
+            NextDialogue();
         }
     }
-    
+
+    private void NextDialogue()
+    {
+        if (_isDialogueFinished) return;
+
+        if (textComponent.text == lines[_index])
+        {
+            NextLine();
+        }
+        else
+        {
+            StopAllCoroutines();
+            textComponent.text = lines[_index];
+        }
+    }
+
     IEnumerator TypeLine()
     {
         foreach (char letter in lines[_index].ToCharArray())
@@ -56,6 +74,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            _isDialogueFinished = true;
             dialogueFinished?.Invoke();
         }
     }

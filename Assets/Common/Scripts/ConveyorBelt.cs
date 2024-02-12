@@ -41,9 +41,7 @@ public class ConveyorBelt : MonoBehaviour
             if (part.TryGetComponent<MeshFilter>(out var partMeshFilter))
             {
                 float meshWidth = partMeshFilter.mesh.bounds.size.x;
-                Debug.Log($"[TEST]: mesh width is {meshWidth}");
                 Vector3 startPos = startPosition + duplicationAxis * i * meshWidth * (flipDirection ? -1 : 1);
-                Debug.Log($"[TEST]: start pos is {startPos}");
                 part.transform.position = startPos;
             }
 

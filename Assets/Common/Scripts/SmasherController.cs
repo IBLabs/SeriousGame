@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Common.Scripts
         [SerializeField] private float cameraShakeStrength = 1f;
 
         private bool _isSmashing;
+        private bool _isColliderActive;
 
         public void OnSmash(InputAction.CallbackContext context)
         {
@@ -31,20 +33,30 @@ namespace Common.Scripts
             if (_isSmashing) yield break;
             
             _isSmashing = true;
+
+            _isColliderActive = true;
             
             yield return transform.DOMoveY(transform.position.y + distance, smashSpeed).SetEase(Ease.InQuad).WaitForCompletion();
 
-            if (shakeCamera)
-            {
-                targetCamera.DOShakePosition(cameraShakeDuration, cameraShakeStrength);
-            }
+            if (shakeCamera) targetCamera.DOShakePosition(cameraShakeDuration, cameraShakeStrength);
 
-            yield return new WaitForSeconds(postSmashDelay);
+            // yield return transform.DOMoveY(transform.position.y - distance / 2, smashSpeed).SetEase(Ease.OutQuad).WaitForCompletion();
+
+            // yield return new WaitForSeconds(postSmashDelay);
+
+            _isColliderActive = false;
 
             yield return transform.DOMoveY(transform.position.y - distance, returnSpeed).SetEase(Ease.OutBack)
                 .WaitForCompletion();
 
             _isSmashing = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_isColliderActive) return;
+
+            Destroy(other.gameObject);
         }
     }
 }
