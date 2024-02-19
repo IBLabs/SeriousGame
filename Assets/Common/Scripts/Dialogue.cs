@@ -1,21 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class Dialogue : MonoBehaviour
 {
+    [System.Serializable]
+    public class Segment
+    {
+        public string[] lines;
+    }
+    
     public UnityEvent dialogueFinished;
+    public UnityEvent dialogueStarted;
 
     [SerializeField] private TextMeshProUGUI textComponent;
-    [SerializeField] private string[] lines;
+    [SerializeField] private Segment[] segments;
     [SerializeField] private float textSpeed = .3f;
 
-    private int _index;
-    private bool _isDialogueFinished;
+    private int _segmentIndex;
+    private int _lineIndex;
 
     // Start is called before the first frame update
     private void Start()
@@ -26,10 +32,14 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue()
     {
+        if (_segmentIndex >= segments.Length) return;
+
         textComponent.text = string.Empty;
-        _index = 0;
+        _lineIndex = 0;
 
         StartCoroutine(TypeLine());
+        
+        dialogueStarted?.Invoke();
     }
 
     public void OnNextDialogue(InputAction.CallbackContext context)
@@ -42,22 +52,20 @@ public class Dialogue : MonoBehaviour
 
     private void NextDialogue()
     {
-        if (_isDialogueFinished) return;
-
-        if (textComponent.text == lines[_index])
+        if (textComponent.text == segments[_segmentIndex].lines[_lineIndex])
         {
             NextLine();
         }
         else
         {
             StopAllCoroutines();
-            textComponent.text = lines[_index];
+            textComponent.text = segments[_segmentIndex].lines[_lineIndex];
         }
     }
 
     IEnumerator TypeLine()
     {
-        foreach (char letter in lines[_index].ToCharArray())
+        foreach (char letter in segments[_segmentIndex].lines[_lineIndex].ToCharArray())
         {
             textComponent.text += letter;
             yield return new WaitForSeconds(textSpeed);
@@ -66,15 +74,15 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
-        if (_index < lines.Length - 1)
+        if (_lineIndex < segments[_segmentIndex].lines.Length - 1)
         {
-            _index++;
+            _lineIndex++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         }
         else
         {
-            _isDialogueFinished = true;
+            _segmentIndex++;
             dialogueFinished?.Invoke();
         }
     }

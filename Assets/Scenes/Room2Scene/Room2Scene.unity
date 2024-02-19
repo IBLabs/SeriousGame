@@ -352,12 +352,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  dialogueStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2083885133}
+        m_TargetAssemblyTypeName: DialogueController, Assembly-CSharp
+        m_MethodName: ShowDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   textComponent: {fileID: 872615089}
-  lines:
-  - Hey you! You're the new guy right?
-  - Come over here, don't just stand there!
-  - We keep getting these stupid fines over these stupid food leftovers...
-  - Make sure to make it all disappear, don't spare anything!
+  segments:
+  - lines:
+    - Hey you! You're the new guy right?
+    - Come over here, don't just stand there!
+    - Get rid of all that crap, now!
+  - lines:
+    - Good job taking care of that, let's take care of some more
   textSpeed: 0.03
 --- !u!114 &17175748
 MonoBehaviour:
@@ -1442,7 +1459,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFinished:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 17175747}
+        m_TargetAssemblyTypeName: Dialogue, Assembly-CSharp
+        m_MethodName: StartDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   objectSpawner: {fileID: 921487526}
 --- !u!4 &813021202
 Transform:
@@ -2125,7 +2154,7 @@ GameObject:
   - component: {fileID: 1182091601}
   - component: {fileID: 1182091600}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Name Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2774,6 +2803,8 @@ MonoBehaviour:
   targetCamera: {fileID: 14994392}
   cameraShakeDuration: 0.2
   cameraShakeStrength: 0.1
+  smashParticleSystem: {fileID: 1363116647288737146, guid: 31958c8515a4f4a51b1d55f911c56a5b,
+    type: 3}
 --- !u!136 &1540313043
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3025,11 +3056,61 @@ PrefabInstance:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 14994392}
+    - target: {fileID: 3021389084944978459, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021389084944978459, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: m_VelocityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021389084944978459, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57502623637d64e1c927c431b9d40ef0, type: 2}
+    - target: {fileID: 4587145799610815433, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587145799610815433, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587145799610815433, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587145799610815433, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.76815236
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587145799610815433, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4957451287441373326, guid: 718e117cc601c488aa6e1185a38263cf,
         type: 3}
       propertyPath: m_Name
       value: Turret1
       objectReference: {fileID: 0}
+    - target: {fileID: 5020851683703552455, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5020851683703552455, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57502623637d64e1c927c431b9d40ef0, type: 2}
     - target: {fileID: 5730750273183195700, guid: 718e117cc601c488aa6e1185a38263cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3079,6 +3160,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.76815236
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8422389575772305097, guid: 718e117cc601c488aa6e1185a38263cf,
         type: 3}
@@ -3220,6 +3331,7 @@ GameObject:
   - component: {fileID: 1849722846}
   - component: {fileID: 1849722845}
   - component: {fileID: 1849722847}
+  - component: {fileID: 1849722848}
   m_Layer: 5
   m_Name: Character Container
   m_TagString: Untagged
@@ -3244,7 +3356,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -581, y: 0}
-  m_SizeDelta: {x: 706, y: 919}
+  m_SizeDelta: {x: 638, y: 688}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1849722845
 MonoBehaviour:
@@ -3266,7 +3378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a89403de1dfb04cea8c6bc2e91157cb3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: be053f520c87e461297f2ee2aa617fcc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3296,6 +3408,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &1849722848
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849722843}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 137dd09c7ede3440dbddd5c7b83ea9ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1908328333
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
-        ShowDialogue();
+        // ShowDialogue();
     }
 
     public void ShowDialogue()

@@ -17,6 +17,8 @@ namespace Common.Scripts
         [SerializeField] private float cameraShakeDuration = .2f;
         [SerializeField] private float cameraShakeStrength = 1f;
 
+        [SerializeField] private Transform smashParticleSystem;
+
         private bool _isSmashing;
         private bool _isColliderActive;
 
@@ -40,10 +42,6 @@ namespace Common.Scripts
 
             if (shakeCamera) targetCamera.DOShakePosition(cameraShakeDuration, cameraShakeStrength);
 
-            // yield return transform.DOMoveY(transform.position.y - distance / 2, smashSpeed).SetEase(Ease.OutQuad).WaitForCompletion();
-
-            // yield return new WaitForSeconds(postSmashDelay);
-
             _isColliderActive = false;
 
             yield return transform.DOMoveY(transform.position.y - distance, returnSpeed).SetEase(Ease.OutBack)
@@ -55,6 +53,16 @@ namespace Common.Scripts
         private void OnTriggerEnter(Collider other)
         {
             if (!_isColliderActive) return;
+
+            var position = other.gameObject.transform.position;
+            
+            Transform newParticleSystem = Instantiate(smashParticleSystem, position, Quaternion.identity);
+            
+            bool didHit = Physics.Raycast(position, Vector3.down, out RaycastHit hit, 10f);
+            if (didHit)
+            {
+                newParticleSystem.position = hit.point;
+            }
 
             Destroy(other.gameObject);
         }

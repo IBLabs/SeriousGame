@@ -9,7 +9,7 @@ namespace Common.Scripts
         
         [SerializeField] private ObjectSpawner objectSpawner;
 
-        private int _levelTargetActiveObjects = 4;
+        private int _levelTargetActiveObjects = 2;
         private int _levelAmountSpawned;
 
         private int _activeObjects = 0;
