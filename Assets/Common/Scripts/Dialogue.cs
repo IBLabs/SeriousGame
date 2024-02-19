@@ -12,13 +12,16 @@ public class Dialogue : MonoBehaviour
     {
         public string[] lines;
     }
-    
-    public UnityEvent dialogueFinished;
+
     public UnityEvent dialogueStarted;
+    public UnityEvent dialogueFinished;
 
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private Segment[] segments;
     [SerializeField] private float textSpeed = .3f;
+
+    [Header("Configuration")]
+    [SerializeField] private bool playOnStart;
 
     private int _segmentIndex;
     private int _lineIndex;
@@ -26,8 +29,7 @@ public class Dialogue : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // TODO: remove if not needed
-        // StartDialogue();
+        if (playOnStart) StartDialogue();
     }
 
     public void StartDialogue()

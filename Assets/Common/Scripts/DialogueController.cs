@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
@@ -8,20 +11,33 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private Image dialogueBackground;
     [SerializeField] private CanvasGroup dialogueBoxContainer;
     [SerializeField] private CanvasGroup character;
+    [SerializeField] private Animator characterAnimator;
+
+    [Header("Configuration")]
+    [SerializeField] private bool showOnStart;
+    [SerializeField] private float fadeOutDelay = 1f;
 
     private void Start()
     {
-        // ShowDialogue();
+        SetInitialState();
+
+        if (showOnStart) ShowDialogue();
     }
 
     public void ShowDialogue()
     {
-        SetDialogueVisible(true);
+        if (characterAnimator != null) characterAnimator.SetTrigger("Enter");
+
+        StopAllCoroutines();
+        StartCoroutine(SetDialogueVisibleCoroutine(true, 0f));
     }
 
     public void HideDialogue()
     {
-        SetDialogueVisible(false);
+        if (characterAnimator != null) characterAnimator.SetTrigger("Exit");
+        
+        StopAllCoroutines();
+        StartCoroutine(SetDialogueVisibleCoroutine(false, fadeOutDelay));
     }
 
     private void SetDialogueVisible(bool isVisible)
@@ -39,5 +55,18 @@ public class DialogueController : MonoBehaviour
         {
             charRectTransform.DOMoveX( charRectTransform.position.x + 15 * (isVisible ? 1 : -1), .2f).SetEase(Ease.OutCubic).SetDelay(.2f);    
         }
+    }
+    
+    private IEnumerator SetDialogueVisibleCoroutine(bool isVisible, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetDialogueVisible(isVisible);
+    }
+
+    private void SetInitialState()
+    {
+        dialogueBackground.color = dialogueBackground.color.WithAlpha(0f);
+        dialogueBoxContainer.alpha = 0f;
+        character.alpha = 0f;
     }
 }

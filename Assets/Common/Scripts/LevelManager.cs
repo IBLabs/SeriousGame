@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,9 @@ namespace Common.Scripts
         public UnityEvent levelFinished;
         
         [SerializeField] private ObjectSpawner objectSpawner;
+
+        [SerializeField] private float startLevelDelay = 0f;
+        [SerializeField] private float levelFinishedEventDelay = 0f;
 
         private int _levelTargetActiveObjects = 2;
         private int _levelAmountSpawned;
@@ -20,6 +24,18 @@ namespace Common.Scripts
         }
 
         public void StartLevel()
+        {
+            StartCoroutine(StartLevelCoroutine(startLevelDelay));
+        }
+
+        private IEnumerator StartLevelCoroutine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            PerformStartLevel();
+        }
+
+        private void PerformStartLevel()
         {
             objectSpawner.StartSpawning();
 
@@ -48,8 +64,19 @@ namespace Common.Scripts
             _activeObjects--;
             if (_activeObjects <= 0)
             {
-                levelFinished?.Invoke();
+                StartCoroutine(LevelFinishedCoroutine(levelFinishedEventDelay));
             }
+        }
+
+        private IEnumerator LevelFinishedCoroutine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            PerformLevelFinished();
+        }
+
+        private void PerformLevelFinished()
+        {
+            levelFinished?.Invoke();
         }
     }
 }

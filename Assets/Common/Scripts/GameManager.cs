@@ -9,9 +9,11 @@ namespace Common.Scripts
         public UnityEvent onGameStart;
         public UnityEvent onGameEnd;
 
+        [SerializeField] private bool startGameOnStart;
+
         private void Start()
         {
-            StartGame();
+            if (startGameOnStart) StartGame();
         }
 
         public void StartGame()
