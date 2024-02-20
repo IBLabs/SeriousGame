@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  m_AmbientSkyColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -1296,6 +1296,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Transition Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 59676750331027650, guid: 848acadeecc9b46659b3755eb97b988a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4719932785958592711, guid: 848acadeecc9b46659b3755eb97b988a,
         type: 3}
       propertyPath: enterFinishedEventDelay
@@ -1711,6 +1716,51 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 26143667}
   m_SourcePrefab: {fileID: 100100000, guid: fd07142bac4044e4c8f1ca5af0b8dcd3, type: 3}
+--- !u!1 &761940858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 761940860}
+  - component: {fileID: 761940859}
+  m_Layer: 0
+  m_Name: Lights Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &761940859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761940858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7ed25b9526482384cb0dac6a88a5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redRoomDuration: 5
+--- !u!4 &761940860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761940858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.89, y: 8.97, z: -8.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &791119378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,6 +1827,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24257a94acd14fae96deb940a81bde3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wrongObjectPassed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 761940859}
+        m_TargetAssemblyTypeName: Common.Scripts.RevisedLevelsSystem.LightsManager,
+          Assembly-CSharp
+        m_MethodName: StartRedRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   objectDestroyed:
     m_PersistentCalls:
       m_Calls:
@@ -1821,6 +1887,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f071e52076f486aba2867079a4e7341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 921487526}
+        m_TargetAssemblyTypeName: ObjectSpawner, Assembly-CSharp
+        m_MethodName: StartSpawning
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 791119381}
+        m_TargetAssemblyTypeName: Common.Scripts.ConveyorEndController, Assembly-CSharp
+        m_MethodName: OnLevelStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   levelFinished:
     m_PersistentCalls:
       m_Calls:
@@ -1848,9 +1941,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  objectSpawner: {fileID: 921487526}
   startLevelDelay: 3
   levelFinishedEventDelay: 1
+  levelDescriptors:
+  - {fileID: 11400000, guid: aac07c648f808420cb54baf52e3273bd, type: 2}
+  - {fileID: 11400000, guid: 7004aa2d0b0604c3fa3fe9fc3c03b226, type: 2}
+  _currentDescriptorIndex: 0
 --- !u!4 &813021202
 Transform:
   m_ObjectHideFlags: 0
@@ -2366,13 +2462,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff784fd08914aa3a4377612fadab21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 3429625419574783278, guid: 9abcb6d13eb374213af05b5dac838bc3,
-    type: 3}
-  spawnRate: 0.33
+  conveyorObjects:
+  - {fileID: 11400000, guid: 9be3489ead00b4a99a8b7060094ca5a2, type: 2}
   randomRotation: 1
   onObjectSpawned:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 813021201}
+        m_TargetAssemblyTypeName: Common.Scripts.LevelManager, Assembly-CSharp
+        m_MethodName: HandleObjectSpawned
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &921487527
 Transform:
   m_ObjectHideFlags: 0
@@ -4127,6 +4234,7 @@ MonoBehaviour:
   characterAnimator: {fileID: 1849722848}
   showOnStart: 0
   fadeOutDelay: 1
+  backgroundAlpha: 0.65
 --- !u!1 &2102012831 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fd07142bac4044e4c8f1ca5af0b8dcd3,
@@ -4241,6 +4349,7 @@ SceneRoots:
   - {fileID: 1908328335}
   - {fileID: 813021202}
   - {fileID: 921487527}
+  - {fileID: 761940860}
   - {fileID: 71461224}
   - {fileID: 196725297}
   - {fileID: 372652562}
