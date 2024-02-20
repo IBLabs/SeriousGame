@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using Common.Scripts.RevisedLevelsSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,22 +9,16 @@ namespace Common.Scripts
 {
     public class LevelManager : MonoBehaviour
     {
+        public UnityEvent<LevelDescriptor> levelStarted;
         public UnityEvent levelFinished;
-        
-        [SerializeField] private ObjectSpawner objectSpawner;
 
+        [Header("Configuration")]
         [SerializeField] private float startLevelDelay = 0f;
         [SerializeField] private float levelFinishedEventDelay = 0f;
-
-        private int _levelTargetActiveObjects = 2;
-        private int _levelAmountSpawned;
-
+        [SerializeField] private List<LevelDescriptor> levelDescriptors;
+        
         private int _activeObjects = 0;
-
-        private void Start()
-        {
-            objectSpawner.onObjectSpawned.AddListener(HandleObjectSpawned);
-        }
+        public int _currentDescriptorIndex = 0;
 
         public void StartLevel()
         {
@@ -31,31 +28,30 @@ namespace Common.Scripts
         private IEnumerator StartLevelCoroutine(float delay)
         {
             yield return new WaitForSeconds(delay);
-            
+
             PerformStartLevel();
         }
 
         private void PerformStartLevel()
         {
-            objectSpawner.StartSpawning();
+            if (levelDescriptors.Count == 0)
+            {
+                Debug.LogWarning("[WARNING]: no level descriptors configured in the level manager, no level to load");
+                return;
+            }
 
-            _activeObjects = _levelTargetActiveObjects;
+            LevelDescriptor currentDescriptor = levelDescriptors[_currentDescriptorIndex];
+
+            _activeObjects = currentDescriptor.amountToSpawn;
+            
+            levelStarted?.Invoke(currentDescriptor);
         }
 
-        private void HandleObjectSpawned(DestructibleObject destructibleObject)
+        public void HandleObjectSpawned(DestructibleObject destructibleObject)
         {
-            _levelAmountSpawned++;
-
             if (destructibleObject != null)
             {
                 destructibleObject.onObjectDestroyed?.AddListener(HandleObjectDestroyed);
-            }
-
-            if (_levelAmountSpawned >= _levelTargetActiveObjects)
-            {
-                _levelAmountSpawned = 0;
-                _levelTargetActiveObjects += 3;
-                objectSpawner.StopSpawning();
             }
         }
 
@@ -76,6 +72,11 @@ namespace Common.Scripts
 
         private void PerformLevelFinished()
         {
+            if (_currentDescriptorIndex < levelDescriptors.Count - 1)
+            {
+                _currentDescriptorIndex++;
+            }
+
             levelFinished?.Invoke();
         }
     }
