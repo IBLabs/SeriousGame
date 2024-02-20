@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
@@ -16,6 +13,7 @@ public class DialogueController : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private bool showOnStart;
     [SerializeField] private float fadeOutDelay = 1f;
+    [SerializeField] private float backgroundAlpha = .65f;
 
     private void Start()
     {
@@ -42,7 +40,7 @@ public class DialogueController : MonoBehaviour
 
     private void SetDialogueVisible(bool isVisible)
     {
-        dialogueBackground.DOFade(isVisible ? .65f : 0f, .2f).From(isVisible ? .65f : 0f).SetEase(Ease.Linear);
+        dialogueBackground.DOFade(isVisible ? .65f : 0f, .2f).From(isVisible ? backgroundAlpha : 0f).SetEase(Ease.Linear);
         
         dialogueBoxContainer.DOFade(isVisible ? 1f : 0, .2f).From(isVisible ? 0f : 1f).SetEase(Ease.Linear).SetDelay(.1f);
         if (dialogueBoxContainer.TryGetComponent(out RectTransform dialogueBoxRectTransform))
@@ -65,7 +63,7 @@ public class DialogueController : MonoBehaviour
 
     private void SetInitialState()
     {
-        dialogueBackground.color = dialogueBackground.color.WithAlpha(0f);
+        dialogueBackground.color = new Color(dialogueBackground.color.r, dialogueBackground.color.g, dialogueBackground.color.b, 0f);
         dialogueBoxContainer.alpha = 0f;
         character.alpha = 0f;
     }
