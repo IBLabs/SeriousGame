@@ -5,6 +5,8 @@ namespace Common.Scripts
 {
     public class TouchableObjectNewInput : MonoBehaviour
     {
+        [SerializeField] private LayerMask targetLayerMask;
+        
         private TouchControls touchControls;
 
         // Declare public Unity Events
@@ -24,17 +26,28 @@ namespace Common.Scripts
         {
             Vector2 touchPosition = touchControls.Touch.TouchPosition.ReadValue<Vector2>();
             Ray ray = Camera.main.ScreenPointToRay(touchPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == transform)
+            
+            Debug.Log($"[TEST]: trying to detect touch on object {gameObject.name}");
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, targetLayerMask))
             {
-                onTouchBegan?.Invoke(touchPosition); // Invoke the onTouchBegan event
-                Debug.Log("Touch started on object");
+                if (hit.transform == transform)
+                {
+                    onTouchBegan?.Invoke(touchPosition);
+                    Debug.Log("Touch started on object");    
+                }
+                else
+                {
+                    Debug.Log($"[TEST]: touch detected on {hit.transform.name} instead of {gameObject.name}");       
+                }
+                
             }
         }
 
         private void EndTouch()
         {
             Vector2 touchPosition = touchControls.Touch.TouchPosition.ReadValue<Vector2>();
-            onTouchEnded?.Invoke(touchPosition); // Invoke the onTouchEnded event
+            onTouchEnded?.Invoke(touchPosition);
             Debug.Log("Touch ended");
         }
 
@@ -42,9 +55,8 @@ namespace Common.Scripts
         {
             if (touchControls.Touch.TouchPress.ReadValue<float>() != 0)
             {
-                // If there's an ongoing touch, track the touch position
                 Vector2 touchPosition = touchControls.Touch.TouchPosition.ReadValue<Vector2>();
-                onTouchMoved?.Invoke(touchPosition); // Invoke the onTouchMoved event
+                onTouchMoved?.Invoke(touchPosition);
             }
         }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -5,21 +6,12 @@ using UnityEngine.Serialization;
 public class TurretController : MonoBehaviour
 {
     [SerializeField] private Camera targetCamera;
-    
     [FormerlySerializedAs("turretHeadTransform")]
     [SerializeField] private Transform turretIKTargetTransform;
     
     [SerializeField] private Transform turretHeadTransform;
     
     private float initialLaserHandleScaleY;
-
-    private void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            RotateTowardsScreenPoint(Input.mousePosition);
-        }
-    }
 
     public void OnHandleTouch(Vector2 touchPosition)
     {

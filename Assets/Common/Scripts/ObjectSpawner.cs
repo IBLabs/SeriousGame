@@ -74,7 +74,7 @@ public class ObjectSpawner : MonoBehaviour
     
     public void StartSpawning(LevelDescriptor levelDescriptor)
     {
-        _spawnRate = levelDescriptor.spawnRate;
+        _spawnRate = levelDescriptor.VegetablesPerSecond;
         _amountToSpawn = levelDescriptor.amountToSpawn;
         _activeSpawnConfig = levelDescriptor.spawnConfiguration;
         

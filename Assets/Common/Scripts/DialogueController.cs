@@ -9,6 +9,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private CanvasGroup dialogueBoxContainer;
     [SerializeField] private CanvasGroup character;
     [SerializeField] private Animator characterAnimator;
+    [SerializeField] private GraphicRaycaster raycaster;
 
     [Header("Configuration")]
     [SerializeField] private bool showOnStart;
@@ -24,6 +25,8 @@ public class DialogueController : MonoBehaviour
 
     public void ShowDialogue()
     {
+        raycaster.enabled = true;
+
         if (characterAnimator != null) characterAnimator.SetTrigger("Enter");
 
         StopAllCoroutines();
@@ -32,6 +35,8 @@ public class DialogueController : MonoBehaviour
 
     public void HideDialogue()
     {
+        raycaster.enabled = false;
+
         if (characterAnimator != null) characterAnimator.SetTrigger("Exit");
         
         StopAllCoroutines();

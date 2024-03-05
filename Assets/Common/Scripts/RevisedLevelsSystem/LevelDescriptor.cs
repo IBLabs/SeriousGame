@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Common.Scripts.RevisedLevelsSystem
 {
@@ -8,7 +9,7 @@ namespace Common.Scripts.RevisedLevelsSystem
     {
         public int amountToSpawn = 0;
         public LevelRuleSet ruleSet;
-        public float spawnRate = 1.0f;
+        [FormerlySerializedAs("spawnRate")] public float VegetablesPerSecond = 1.0f;
         public SpawnConfiguration spawnConfiguration;
     }
 }

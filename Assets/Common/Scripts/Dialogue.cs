@@ -25,6 +25,7 @@ public class Dialogue : MonoBehaviour
 
     private int _segmentIndex;
     private int _lineIndex;
+    private bool _isDialogueActive;
 
     // Start is called before the first frame update
     private void Start()
@@ -41,6 +42,8 @@ public class Dialogue : MonoBehaviour
 
         StartCoroutine(TypeLine());
         
+        _isDialogueActive = true;
+        
         dialogueStarted?.Invoke();
     }
 
@@ -54,6 +57,8 @@ public class Dialogue : MonoBehaviour
 
     private void NextDialogue()
     {
+        if (!_isDialogueActive) return;
+
         if (textComponent.text == segments[_segmentIndex].lines[_lineIndex])
         {
             NextLine();
@@ -84,7 +89,13 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            _segmentIndex++;
+            if (_segmentIndex < segments.Length - 1)
+            {
+                _segmentIndex++;
+            }
+
+            _isDialogueActive = false;
+
             dialogueFinished?.Invoke();
         }
     }

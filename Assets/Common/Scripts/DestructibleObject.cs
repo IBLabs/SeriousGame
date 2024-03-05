@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 namespace Common.Scripts
 {
@@ -8,8 +10,18 @@ namespace Common.Scripts
         [System.Serializable]
         public class ObjectDestroyedEvent : UnityEvent<DestructibleObject> {}
 
-        [SerializeField] public ObjectDestroyedEvent onObjectDestroyed;
+        public bool IsBeingDestroyed { get; private set; }
+
+        [SerializeField] public ObjectDestroyedEvent onObjectDestroyed = new();
+        [SerializeField] public ObjectDestroyedEvent onMarkedForDestroy = new();
         public LayerMask floorLayerMask;
+
+        public void DestroySelf()
+        {
+            IsBeingDestroyed = true;
+            onMarkedForDestroy?.Invoke(this);
+            Destroy(gameObject);
+        }
 
         private void OnDestroy()
         {

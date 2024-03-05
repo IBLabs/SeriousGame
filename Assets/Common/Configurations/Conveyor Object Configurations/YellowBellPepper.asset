@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29f96e18f5074058bc1ab53938342a48, type: 3}
+  m_Name: YellowBellPepper
+  m_EditorClassIdentifier: 
+  prefabs:
+  - sizeClass: 0
+    prefab: {fileID: 8726873846388060948, guid: 6e029e2ef858344c2a52e09ced7f1150,
+      type: 3}
+  - sizeClass: 1
+    prefab: {fileID: 320471277101288020, guid: d3f2a9ed8525a44cfab6b40e33124f36, type: 3}
+  - sizeClass: 2
+    prefab: {fileID: 2161567258775766607, guid: de9f2c732b8b04bf6ac68862696b5f26,
+      type: 3}

@@ -11,8 +11,11 @@ namespace Common.Scripts.RevisedLevelsSystem
         {
             if (!TryGetComponent(out MeshRenderer meshRenderer)) return;
             
-            meshRenderer.material.SetInt("_SpotsEnabled", isVisible ? 1 : 0);
-
+            foreach (var material in meshRenderer.materials)
+            {
+                material.SetInt("_SpotsEnabled", isVisible ? 1 : 0);    
+            }
+            
             hasSpots = isVisible;
         }
     }

@@ -1,21 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common.Scripts.RevisedLevelsSystem;
+using DG.Tweening;
 using UnityEngine;
 
 public class ConveyorBelt : MonoBehaviour
 {
     public GameObject partPrefab;
     public int amount = 10;
-    public Vector3 velocity = new Vector3(0, 0, 1);
+
+    public float conveyorBeltSpeed = 1;
 
     [SerializeField] private float loopDelta = 50f;
     [SerializeField] private bool flipDirection;
+    [SerializeField] private float levelSpeedMutliplier = 3f;
 
     private GameObject[] parts;
     private Vector3 duplicationAxis = Vector3.left;
 
     private List<Rigidbody> touchingRigidbodies = new();
+    
+    private Vector3 _velocity => new(conveyorBeltSpeed, 0f, 0f);
 
     void Start()
     {
@@ -55,7 +61,7 @@ public class ConveyorBelt : MonoBehaviour
         {
             if (!part.TryGetComponent(out Rigidbody partRb)) return;
             
-            partRb.MovePosition(partRb.position + velocity * (flipDirection ? -1 : 1) * Time.fixedDeltaTime);
+            partRb.MovePosition(partRb.position + _velocity * (flipDirection ? -1 : 1) * Time.fixedDeltaTime);
             
             bool shouldReposition = flipDirection ? partRb.position.x < -loopDelta : partRb.position.x > loopDelta;
             
@@ -82,7 +88,7 @@ public class ConveyorBelt : MonoBehaviour
     {
         foreach (Rigidbody touchingRigidbody in touchingRigidbodies)
         {
-            touchingRigidbody.AddForce(velocity * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            touchingRigidbody.AddForce(_velocity * Time.fixedDeltaTime, ForceMode.VelocityChange);
         }
     }
     
@@ -136,5 +142,10 @@ public class ConveyorBelt : MonoBehaviour
     private void OnCollisionExit(Collision other)
     {
         touchingRigidbodies.Remove(other.rigidbody);
+    }
+
+    public void OnLevelStart(LevelDescriptor levelDescriptor)
+    {
+        DOTween.To(() => conveyorBeltSpeed, (x) => conveyorBeltSpeed = x, levelDescriptor.VegetablesPerSecond * levelSpeedMutliplier, .5f);
     }
 }

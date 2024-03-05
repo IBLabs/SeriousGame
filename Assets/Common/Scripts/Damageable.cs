@@ -14,21 +14,31 @@ namespace Common.Scripts
             _currentHealth = initialHealth;
         }
 
-        public void ApplyDamage(float damage)
+        public bool ApplyDamage(float damage)
         {
-            if (_currentHealth <= 0) return;
+            if (_currentHealth <= 0) return false;
             
             _currentHealth -= damage;
             
             if (_currentHealth <= 0)
             {
                 Die();
+                return true;
             }
+
+            return false;
         }
         
         private void Die()
         {
-            Destroy(gameObject);
+            if (TryGetComponent(out DestructibleObject destructibleObject))
+            {
+                destructibleObject.DestroySelf();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

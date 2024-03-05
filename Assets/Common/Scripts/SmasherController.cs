@@ -2,25 +2,34 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Common.Scripts
 {
-    public class SmasherController : MonoBehaviour
+    public class SmasherController : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private float distance;
         [SerializeField] private float smashSpeed;
-        [SerializeField] private float postSmashDelay = .5f;
         [SerializeField] private float returnSpeed;
         [SerializeField] private bool shakeCamera;
         [SerializeField] private Camera targetCamera;
         [SerializeField] private float cameraShakeDuration = .2f;
         [SerializeField] private float cameraShakeStrength = 1f;
+        [SerializeField] private LayerMask conveyorBeltLayerMask;
+        
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip smashSound;
 
         [SerializeField] private Transform smashParticleSystem;
 
         private bool _isSmashing;
         private bool _isColliderActive;
+
+        public void OnTouchBegin(Vector2 touchPosition)
+        {
+            StartCoroutine(Smash());
+        }
 
         public void OnSmash(InputAction.CallbackContext context)
         {
@@ -29,16 +38,24 @@ namespace Common.Scripts
                 StartCoroutine(Smash());
             }
         }
+        
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            StartCoroutine(Smash());
+        }
 
         public IEnumerator Smash()
         {
             if (_isSmashing) yield break;
-            
+
             _isSmashing = true;
 
             _isColliderActive = true;
             
-            yield return transform.DOMoveY(transform.position.y + distance, smashSpeed).SetEase(Ease.InQuad).WaitForCompletion();
+            audioSource.PlayOneShot(smashSound);
+
+            yield return transform.DOMoveY(transform.position.y + distance, smashSpeed).SetEase(Ease.InQuad)
+                .WaitForCompletion();
 
             if (shakeCamera) targetCamera.DOShakePosition(cameraShakeDuration, cameraShakeStrength);
 
@@ -52,19 +69,37 @@ namespace Common.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isColliderActive) return;
+            if (!_isColliderActive)
+            {
+                return;
+            }
+
+            if (other.TryGetComponent(out DestructibleObject destructibleObject) && destructibleObject.IsBeingDestroyed)
+            {
+                return;
+            }
 
             var position = other.gameObject.transform.position;
-            
+
             Transform newParticleSystem = Instantiate(smashParticleSystem, position, Quaternion.identity);
-            
-            bool didHit = Physics.Raycast(position, Vector3.down, out RaycastHit hit, 10f);
+
+            bool didHit = Physics.Raycast(
+                position, Vector3.down, out RaycastHit hit, 100f, conveyorBeltLayerMask
+            );
+
             if (didHit)
             {
                 newParticleSystem.position = hit.point;
             }
 
-            Destroy(other.gameObject);
+            if (destructibleObject != null)
+            {
+                destructibleObject.DestroySelf();
+            }
+            else
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }

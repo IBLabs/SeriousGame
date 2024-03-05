@@ -2664,6 +2664,7 @@ MonoBehaviour:
   dialogueBoxContainer: {fileID: 571750371}
   character: {fileID: 1404541283}
   characterAnimator: {fileID: 0}
+  raycaster: {fileID: 1914617202}
   showOnStart: 0
   fadeOutDelay: 0.5
   backgroundAlpha: 0.45
