@@ -50,7 +50,7 @@ namespace Common.Scripts
 
             _isSmashing = true;
 
-            _isColliderActive = true;
+            // _isColliderActive = true;
             
             audioSource.PlayOneShot(smashSound);
 
@@ -59,7 +59,7 @@ namespace Common.Scripts
 
             if (shakeCamera) targetCamera.DOShakePosition(cameraShakeDuration, cameraShakeStrength);
 
-            _isColliderActive = false;
+            // _isColliderActive = false;
 
             yield return transform.DOMoveY(transform.position.y - distance, returnSpeed).SetEase(Ease.OutBack)
                 .WaitForCompletion();
@@ -69,10 +69,12 @@ namespace Common.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
+            /*
             if (!_isColliderActive)
             {
                 return;
             }
+            */
 
             if (other.TryGetComponent(out DestructibleObject destructibleObject) && destructibleObject.IsBeingDestroyed)
             {
@@ -94,7 +96,7 @@ namespace Common.Scripts
 
             if (destructibleObject != null)
             {
-                destructibleObject.DestroySelf();
+                destructibleObject.DestroySelf(gameObject);
             }
             else
             {

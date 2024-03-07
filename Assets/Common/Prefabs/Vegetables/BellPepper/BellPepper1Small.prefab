@@ -33,17 +33,42 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 2803685940795831061, guid: 3075a7549e0c647d88e6243f47999066,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3175921290780369265, guid: 3075a7549e0c647d88e6243f47999066,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -173067638489881002, guid: f18242d2c20d54dd594233a000c3b3b9,
         type: 3}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.49881965
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.37548488
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.5066904
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.2138997
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5041813590158616075, guid: 3075a7549e0c647d88e6243f47999066,
         type: 3}
       propertyPath: m_Mesh

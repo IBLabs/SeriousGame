@@ -24,6 +24,26 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.81344664
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.8024545
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348745325018165725, guid: 3075a7549e0c647d88e6243f47999066,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5041813590158616075, guid: 3075a7549e0c647d88e6243f47999066,
         type: 3}
       propertyPath: m_Mesh

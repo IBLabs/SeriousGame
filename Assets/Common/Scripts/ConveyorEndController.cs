@@ -27,7 +27,15 @@ namespace Common.Scripts
                     wrongObjectPassed?.Invoke();
                 }
 
-                Destroy(other.gameObject);
+                if (other.TryGetComponent(out DestructibleObject destructibleObject))
+                {
+                    destructibleObject.DestroySelf(gameObject);
+                }
+                else
+                {
+                    Destroy(other.gameObject);    
+                }
+                
                 objectDestroyed?.Invoke();
             }
         }

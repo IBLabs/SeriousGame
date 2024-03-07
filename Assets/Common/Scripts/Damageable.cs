@@ -14,7 +14,7 @@ namespace Common.Scripts
             _currentHealth = initialHealth;
         }
 
-        public bool ApplyDamage(float damage)
+        public bool ApplyDamage(float damage, GameObject damageDealer)
         {
             if (_currentHealth <= 0) return false;
             
@@ -22,18 +22,18 @@ namespace Common.Scripts
             
             if (_currentHealth <= 0)
             {
-                Die();
+                Die(damageDealer);
                 return true;
             }
 
             return false;
         }
         
-        private void Die()
+        private void Die(GameObject killer)
         {
             if (TryGetComponent(out DestructibleObject destructibleObject))
             {
-                destructibleObject.DestroySelf();
+                destructibleObject.DestroySelf(killer);
             }
             else
             {

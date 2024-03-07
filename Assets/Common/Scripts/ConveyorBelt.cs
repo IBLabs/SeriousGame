@@ -146,6 +146,6 @@ public class ConveyorBelt : MonoBehaviour
 
     public void OnLevelStart(LevelDescriptor levelDescriptor)
     {
-        DOTween.To(() => conveyorBeltSpeed, (x) => conveyorBeltSpeed = x, levelDescriptor.VegetablesPerSecond * levelSpeedMutliplier, .5f);
+        DOTween.To(() => conveyorBeltSpeed, (x) => conveyorBeltSpeed = x, levelDescriptor.spawnRate * levelSpeedMutliplier, .5f);
     }
 }

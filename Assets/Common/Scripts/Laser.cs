@@ -91,7 +91,7 @@ public class Laser : MonoBehaviour
 
             if (hit.collider.TryGetComponent(out Damageable damageable))
             {
-                bool didDie = damageable.ApplyDamage(damage * Time.fixedDeltaTime);
+                bool didDie = damageable.ApplyDamage(damage * Time.fixedDeltaTime, gameObject);
                 if (didDie)
                 {
                     Instantiate(explosionPrefab, damageable.transform.position, Quaternion.identity);

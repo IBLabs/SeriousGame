@@ -15,4 +15,4 @@ MonoBehaviour:
   amountToSpawn: 8
   ruleSet: {fileID: 11400000, guid: 4235dc93f4cfe488aa6ed6bec7b7656b, type: 2}
   spawnRate: 0.45
-  spawnConfiguration: {fileID: 11400000, guid: d906085ccde504d0e9907ca8aba5c28e, type: 2}
+  validObjectsPercentage: 0

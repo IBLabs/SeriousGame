@@ -11,14 +11,16 @@ namespace Common.Scripts
         public class ObjectDestroyedEvent : UnityEvent<DestructibleObject> {}
 
         public bool IsBeingDestroyed { get; private set; }
+        public GameObject Destroyer { get; private set; }
 
         [SerializeField] public ObjectDestroyedEvent onObjectDestroyed = new();
         [SerializeField] public ObjectDestroyedEvent onMarkedForDestroy = new();
         public LayerMask floorLayerMask;
 
-        public void DestroySelf()
+        public void DestroySelf(GameObject destroyer)
         {
             IsBeingDestroyed = true;
+            Destroyer = destroyer;
             onMarkedForDestroy?.Invoke(this);
             Destroy(gameObject);
         }

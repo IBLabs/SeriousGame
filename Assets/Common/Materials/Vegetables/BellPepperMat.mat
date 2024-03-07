@@ -48,11 +48,11 @@ Material:
     - _SpotsDensity: 10
     - _SpotsEnabled: 0
     - _SpotsRandomness: 7
-    - _SpotsSize: 0.16
+    - _SpotsSize: 0.27
     m_Colors:
     - _Color: {r: 0.745283, g: 0.16055895, b: 0, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpotsColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+    - _SpotsColor: {r: 0.33962262, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8633456912204400116
 MonoBehaviour:

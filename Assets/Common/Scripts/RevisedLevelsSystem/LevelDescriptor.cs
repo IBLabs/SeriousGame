@@ -9,7 +9,12 @@ namespace Common.Scripts.RevisedLevelsSystem
     {
         public int amountToSpawn = 0;
         public LevelRuleSet ruleSet;
-        [FormerlySerializedAs("spawnRate")] public float VegetablesPerSecond = 1.0f;
-        public SpawnConfiguration spawnConfiguration;
+        public float spawnRate = 1.0f;
+        public float validObjectsPercentage = .5f;
+        
+        public bool IsSizeClassValid(ConveyorObjectSizeClass sizeClass)
+        {
+            return ruleSet.allowedSizes.Contains(sizeClass);
+        }
     }
 }
