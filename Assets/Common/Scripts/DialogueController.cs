@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
 {
-    [SerializeField] private Image dialogueBackground;
+    [SerializeField] private CanvasGroup dialogueBackground;
     [SerializeField] private CanvasGroup dialogueBoxContainer;
     [SerializeField] private CanvasGroup character;
     [SerializeField] private Animator characterAnimator;
@@ -89,7 +89,7 @@ public class DialogueController : MonoBehaviour
 
     private void SetInitialState()
     {
-        dialogueBackground.color = new Color(dialogueBackground.color.r, dialogueBackground.color.g, dialogueBackground.color.b, 0f);
+        dialogueBackground.alpha = 0;
         dialogueBoxContainer.alpha = 0f;
         character.alpha = 0f;
     }

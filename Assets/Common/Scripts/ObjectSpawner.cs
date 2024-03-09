@@ -139,9 +139,13 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
     
-    public void StartSpawning(LevelDescriptor levelDescriptor)
+    public void OnLevelStart(LevelDescriptor levelDescriptor)
     {
         PrepareForSpawn(levelDescriptor);
+    }
+    
+    public void StartSpawning()
+    {
         isSpawningActive = true;
     }
 

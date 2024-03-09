@@ -16,6 +16,8 @@ public class Dialogue : MonoBehaviour
     public UnityEvent dialogueStarted;
     public UnityEvent dialogueFinished;
 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip nextLineAudioClip;
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private Segment[] segments;
     [SerializeField] private float textSpeed = .3f;
@@ -61,6 +63,7 @@ public class Dialogue : MonoBehaviour
 
         if (textComponent.text == segments[_segmentIndex].lines[_lineIndex])
         {
+            _audioSource.PlayOneShot(nextLineAudioClip);
             NextLine();
         }
         else
