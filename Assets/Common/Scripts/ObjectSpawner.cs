@@ -90,7 +90,7 @@ public class ObjectSpawner : MonoBehaviour
             destructibleObject = spawnedObject.AddComponent<DestructibleObject>();
         }
         
-        destructibleObject.onObjectDestroyed.AddListener(OnSpawnedObjectDestroyed);
+        destructibleObject.onMarkedForDestroy.AddListener(OnSpawnedObjectDestroyed);
         
         _spawnedObjects.Add(destructibleObject);
         
@@ -120,11 +120,22 @@ public class ObjectSpawner : MonoBehaviour
 
     private void ConfigureObjectSpots(DestructibleObject destructibleObject, bool isValid)
     {
-        bool isSpotsAllowed = _activeLevelDescriptor.ruleSet.spotsAllowed;
-        bool objectHasSpots = isValid ? isSpotsAllowed : !isSpotsAllowed;
-        if (objectHasSpots && destructibleObject.TryGetComponent(out Spottalbe spottalbe))
+        // if the current rule set contians size restrictions, randomize the spots
+        if (_activeLevelDescriptor.ruleSet.allowedSizes.Count > 0 && !isValid)
         {
-            spottalbe.SetSpotsVisible(true);
+            if (destructibleObject.TryGetComponent(out Spottalbe spottalbe))
+            {
+                spottalbe.SetSpotsVisible(Random.Range(0, 2) == 0);
+            }
+        }
+        else
+        {
+            bool isSpotsAllowed = _activeLevelDescriptor.ruleSet.spotsAllowed;
+            bool objectHasSpots = isValid ? isSpotsAllowed : !isSpotsAllowed;
+            if (objectHasSpots && destructibleObject.TryGetComponent(out Spottalbe spottalbe))
+            {
+                spottalbe.SetSpotsVisible(true);
+            }
         }
     }
     

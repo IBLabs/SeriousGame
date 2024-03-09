@@ -1,4 +1,6 @@
+using System;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -10,8 +12,17 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Transform turretIKTargetTransform;
     
     [SerializeField] private Transform turretHeadTransform;
+    [SerializeField] private LayerMask laserHitLayerMask;
     
     private float initialLaserHandleScaleY;
+
+    private void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            RotateTowardsScreenPoint(Input.mousePosition);
+        }
+    }
 
     public void OnHandleTouch(Vector2 touchPosition)
     {
@@ -29,9 +40,13 @@ public class TurretController : MonoBehaviour
     private void RotateTowardsScreenPoint(Vector3 targetPoint)
     {
         Ray screenRay = targetCamera.ScreenPointToRay(targetPoint);
+        
+        Debug.DrawRay(screenRay.origin, screenRay.direction * 100f, Color.red, 1f);
 
-        if (Physics.Raycast(screenRay, out RaycastHit hitInfo, 1000f))
+        if (Physics.Raycast(screenRay, out RaycastHit hitInfo, 1000f, laserHitLayerMask))
         {
+            Debug.Log("[TEST]: screen ray hit " + hitInfo.transform.name);
+
             RotateTowardsTargetPoint(hitInfo.point);
         }
         else

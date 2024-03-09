@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   amountToSpawn: 8
-  ruleSet: {fileID: 11400000, guid: 4235dc93f4cfe488aa6ed6bec7b7656b, type: 2}
-  spawnRate: 0.45
-  validObjectsPercentage: 0
+  ruleSet: {fileID: 11400000, guid: aa883439496b04625ae0d5fc51b4fd17, type: 2}
+  spawnRate: 0.65
+  validObjectsPercentage: 0.3

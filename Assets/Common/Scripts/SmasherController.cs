@@ -23,6 +23,11 @@ namespace Common.Scripts
 
         [SerializeField] private Transform smashParticleSystem;
 
+        [SerializeField] private Transform smasherButtonTransform;
+        [SerializeField] private MeshRenderer smasherButtonMeshRenderer;
+        [SerializeField] private Color smasherButtonInactiveColor;
+        [SerializeField] private Color smasherButtonActiveColor;
+
         private bool _isSmashing;
         private bool _isColliderActive;
 
@@ -50,6 +55,10 @@ namespace Common.Scripts
 
             _isSmashing = true;
 
+            smasherButtonTransform.DOMoveZ(-.15f, .5f).SetEase(Ease.OutBack).SetRelative(true);
+            smasherButtonMeshRenderer.material.DOColor(smasherButtonInactiveColor, .5f);
+            smasherButtonMeshRenderer.material.DOColor(Color.grey, "_EmissionColor", .5f);
+
             // _isColliderActive = true;
             
             audioSource.PlayOneShot(smashSound);
@@ -63,6 +72,10 @@ namespace Common.Scripts
 
             yield return transform.DOMoveY(transform.position.y - distance, returnSpeed).SetEase(Ease.OutBack)
                 .WaitForCompletion();
+            
+            smasherButtonTransform.DOMoveZ(.15f, .5f).SetEase(Ease.OutBack).SetRelative(true);
+            smasherButtonMeshRenderer.material.DOColor(smasherButtonActiveColor, .5f);
+            smasherButtonMeshRenderer.material.DOColor(Color.white, "_EmissionColor", .5f);
 
             _isSmashing = false;
         }

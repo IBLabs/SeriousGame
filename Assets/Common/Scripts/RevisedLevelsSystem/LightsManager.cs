@@ -8,11 +8,17 @@ namespace Common.Scripts.RevisedLevelsSystem
     {
         [SerializeField] private float redRoomDuration = 5.0f;
 
+        [ColorUsage(true, true)]
+        [SerializeField] private Color initialAmbientLightColor;
+
         private Tweener _ambientLightTweener;
         private float _redRoomEndTime;
         private bool _isRedRoomPlaying;
 
-        private Color _originalAmbientLight;
+        private void OnDestroy()
+        {
+            StopRedRoom(false);
+        }
 
         private void Update()
         {
@@ -21,7 +27,7 @@ namespace Common.Scripts.RevisedLevelsSystem
                 if (Time.time >= _redRoomEndTime)
                 {
                     _isRedRoomPlaying = false;
-                    StopRedRoom();
+                    StopRedRoom(true);
                 }
             }
         }
@@ -32,7 +38,6 @@ namespace Common.Scripts.RevisedLevelsSystem
 
             if (_isRedRoomPlaying) return;
 
-            _originalAmbientLight = RenderSettings.ambientLight;
             _ambientLightTweener = DOTween
                 .To(() => RenderSettings.ambientLight, (x) => RenderSettings.ambientLight = x, Color.red, .66f)
                 .SetLoops(-1, LoopType.Yoyo)
@@ -41,11 +46,24 @@ namespace Common.Scripts.RevisedLevelsSystem
             _isRedRoomPlaying = true;
         }
 
-        public void StopRedRoom()
+        public void StopRedRoom(bool animated)
         {
-            _ambientLightTweener.Kill();
-            DOTween.To(() => RenderSettings.ambientLight, (x) => RenderSettings.ambientLight = x, _originalAmbientLight,
-                .2f);
+            if (_ambientLightTweener != null)
+            {
+                _ambientLightTweener.Kill();
+                _ambientLightTweener = null;
+            }
+
+            if (animated)
+            {
+                DOTween.To(() => RenderSettings.ambientLight, (x) => RenderSettings.ambientLight = x, initialAmbientLightColor,
+                    .2f);
+            }
+            else
+            {
+                RenderSettings.ambientLight = initialAmbientLightColor;
+            
+            }
         }
     }
 }

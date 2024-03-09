@@ -18,6 +18,7 @@ public class Laser : MonoBehaviour
 
     [SerializeField] private float damage;
     [SerializeField] private AudioClip smallExplosionClip;
+    [SerializeField] private LayerMask hitLayerMask;
 
     private bool _isLaserEnabled;
 
@@ -53,8 +54,8 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetMouseButtonDown(0)) ActivateLaser();
-        // else if (Input.GetMouseButtonUp(0)) DeactivateLaser();
+        if (Input.GetMouseButtonDown(0)) ActivateLaser();
+        else if (Input.GetMouseButtonUp(0)) DeactivateLaser();
     }
 
     public void OnShootLaser(InputAction.CallbackContext context)
@@ -75,7 +76,7 @@ public class Laser : MonoBehaviour
         }
 
         Ray ray = new Ray(muzzlePoint.position, muzzlePoint.up);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, hitLayerMask))
         {
             Vector3 hitPosition = hit.point;
         

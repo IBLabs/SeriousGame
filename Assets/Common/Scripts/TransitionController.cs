@@ -40,6 +40,12 @@ public class TransitionController : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(ExitTransitionCoroutine(duration));
     }
+    
+    public IEnumerator StartExitTransitionCoroutine()
+    {
+        StopAllCoroutines();
+        yield return ExitTransitionCoroutine(duration);
+    }
 
     private IEnumerator EnterTransitionCoroutine(float duration)
     {

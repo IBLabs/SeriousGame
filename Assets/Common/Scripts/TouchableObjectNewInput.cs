@@ -27,14 +27,15 @@ namespace Common.Scripts
             Vector2 touchPosition = touchControls.Touch.TouchPosition.ReadValue<Vector2>();
             Ray ray = Camera.main.ScreenPointToRay(touchPosition);
             
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
             Debug.Log($"[TEST]: trying to detect touch on object {gameObject.name}");
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, targetLayerMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, targetLayerMask.value))
             {
                 if (hit.transform == transform)
                 {
                     onTouchBegan?.Invoke(touchPosition);
-                    Debug.Log("Touch started on object");    
+                    Debug.Log($"Touch started on object {gameObject.name}");    
                 }
                 else
                 {

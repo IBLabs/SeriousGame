@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using Common.Scripts.RevisedLevelsSystem;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Common.Scripts
@@ -11,6 +13,9 @@ namespace Common.Scripts
         [SerializeField] private Image spotsImage;
         [SerializeField] private Image bigImage;
         [SerializeField] private Image smallImage;
+
+        public UnityEvent onFinishEnterAnimation;
+        public UnityEvent onFinishExitAnimation;
 
         private bool _isVisible = true;
         private float _slideOffset = 300f;
@@ -28,12 +33,18 @@ namespace Common.Scripts
 
             if (animated)
             {
-                GetComponent<RectTransform>().DOAnchorPosX(-_slideOffset, .4f).SetEase(Ease.OutCubic).SetRelative(true);
+                StartCoroutine(ShowCoroutine());
             }
             else
             {
-                GetComponent<RectTransform>().anchoredPosition -= new Vector2(-_slideOffset, 0);
+                GetComponent<RectTransform>().anchoredPosition += new Vector2(0, _slideOffset);
             }
+        }
+
+        private IEnumerator ShowCoroutine()
+        {
+            yield return GetComponent<RectTransform>().DOAnchorPosY(_slideOffset, .4f).SetEase(Ease.OutCubic).SetRelative(true).WaitForCompletion();
+            onFinishEnterAnimation?.Invoke();
         }
 
         public void Hide(bool animated)
@@ -44,12 +55,18 @@ namespace Common.Scripts
 
             if (animated)
             {
-                GetComponent<RectTransform>().DOAnchorPosX(_slideOffset, .4f).SetEase(Ease.InCubic).SetRelative(true);    
+                StartCoroutine(HideCoroutine());
             }
             else
             {
-                GetComponent<RectTransform>().anchoredPosition += new Vector2(_slideOffset, 0);
+                GetComponent<RectTransform>().anchoredPosition -= new Vector2(0, _slideOffset);
             }
+        }
+
+        private IEnumerator HideCoroutine()
+        {
+            yield return GetComponent<RectTransform>().DOAnchorPosY(-_slideOffset, .4f).SetEase(Ease.InCubic).SetRelative(true).WaitForCompletion();
+            onFinishExitAnimation?.Invoke();
         }
 
         public void OnLevelStart(LevelDescriptor levelDescriptor)

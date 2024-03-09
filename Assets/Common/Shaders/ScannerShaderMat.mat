@@ -62,7 +62,7 @@ Material:
     - _CastShadows: 1
     - _Cull: 0
     - _DstBlend: 10
-    - _IntersectionDepth: 1.76
+    - _IntersectionDepth: 2.69
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -78,6 +78,6 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _IntersectionColor: {r: 0.3690902, g: 1.3032098, b: 5.216475, a: 0.12941177}
+    - _IntersectionColor: {r: 9.537256, g: 47.937256, b: 0, a: 0.12941177}
     - _Tiling: {r: 6.88, g: 8.99, b: 0, a: 0}
   m_BuildTextureStacks: []
